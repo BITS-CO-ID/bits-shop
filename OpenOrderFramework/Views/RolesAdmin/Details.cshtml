@@ -1,0 +1,45 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "Rincian Hak Akses";
+}
+
+<h2>Rincian Hak Akses</h2>
+
+<div>
+    <h4>Hak Akses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<h4>Pengguna dalam hak akses ini</h4>
+@if (ViewBag.UserCount == 0)
+{
+    <hr />
+    <p>Tidak ada pengguna dalam hak akses ini.</p>
+}
+
+<table class="table">
+
+    @foreach (var item in ViewBag.Users)
+    {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Kembali", "Index")
+</p>
+
+
+

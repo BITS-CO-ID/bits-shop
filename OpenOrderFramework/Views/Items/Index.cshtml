@@ -1,0 +1,113 @@
+﻿@model PagedList.IPagedList<OpenOrderFramework.Models.Item>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Makanan & Minuman";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".AddLink").click(function () {
+            // Get the id from the link
+            var recordToAdd = $(this).attr("data-id");
+            if (recordToAdd != '') {
+                // Perform the ajax post
+                $.post("/ShoppingCart/AddToCart", { "id": recordToAdd },
+                    function (data) {
+                        $('#cart-status').text(data.CartCount);
+                    });
+            }
+        });
+    });
+</script>
+<!-- Button trigger modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div aria-hidden="true" class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Pesanan anda sudah berhasil ditambahkan dalam keranjang belanja.</strong> Untuk membayarnya, silahkan <a href="#" class="alert-link">klik disini</a>.
+    </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Konfirmasi Pesanan</h4>
+            </div>
+            <div class="modal-body">
+                <p>Mau Belanja Lagi ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Lanjutkan Belanja</button>
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "ShoppingCart")'">Bayar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h2>Silahkan Pesan Makanan &amp; Minuman</h2>
+<div class="bs-docs-section">
+    <div class="row">
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <div class="form-group pull-left" style="margin:10px 20px">
+                        <a href="@Url.Action("Create")" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-link"></span> Tambah Produk</a>
+            </div>
+        }
+        @using (Html.BeginForm("Index", "Items", FormMethod.Get))
+        {
+
+            <div class="form-group pull-right">
+                <div class="input-group">
+                    <span class="input-group-addon">Cari : </span>
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-info btn-sm" value="Cari" />
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Kategori
+        </th>
+        <th>
+            @Html.ActionLink("Nama Produk", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Harga Produk", "Index", new { sortOrder = ViewBag.PriceSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Catagorie.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-link"></span> Lihat Produk</a>
+                <a href="#" class="btn btn-info btn-xs AddLink" data-id="@item.ID" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-shopping-cart"></span> Pesan Produk</a>
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <!--<a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-edit"></span> Rubah Pesanan</a>-->
+                    <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span> Hapus Pesanan</a>
+                }
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Halaman @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) dari @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

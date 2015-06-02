@@ -1,0 +1,33 @@
+﻿@model OpenOrderFramework.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Hapus Pengguna";
+}
+
+<h2>Hapus Pengguna.</h2>
+
+<h3>Anda yakin ingin menghapus ini ?</h3>
+<div>
+    <h4>
+        Pengguna
+    </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Hapus" class="btn btn-default" /> |
+            @Html.ActionLink("Kembali", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,17 @@
+﻿@model OpenOrderFramework.Models.GuestViewModel
+@using Microsoft.Owin.Security
+
+<h4>Login sebagai Tamu</h4>
+<hr />
+@using (Html.BeginForm("GuestLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.GuestAcct)
+        @Html.HiddenFor(model => model.GuestPassword)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Pesan Tanpa Menjadi Member" class="btn btn-default" />
+            </div>
+        </div>
+}

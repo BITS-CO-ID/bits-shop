@@ -1,0 +1,53 @@
+@model OpenOrderFramework.Models.IndexViewModel
+@{
+    ViewBag.Title = "Kelola Akun";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword) {
+                @Html.ActionLink("Ganti Password", "ChangePassword")
+            }
+            else {
+                @Html.ActionLink("Pilih Password", "SetPassword")
+            }
+        </p>
+        <p>
+            Phone Number: @(Model.PhoneNumber ?? "None") [
+            @if (Model.PhoneNumber != null) {
+                @Html.ActionLink("Ganti", "AddPhoneNumber")
+                @: &nbsp;|&nbsp;
+                @Html.ActionLink("Hapus", "RemovePhoneNumber")
+            }
+            else {
+                @Html.ActionLink("Tambah", "AddPhoneNumber")
+            }
+            ]
+        </p>
+        <p>
+            External Login : @Model.Logins.Count
+            @Html.ActionLink("[Manage]", "ManageLogins")
+        </p>
+        <p>
+            Two Factor : @(Model.TwoFactor)
+            @if (Model.TwoFactor) {
+                @Html.ActionLink("[Disable]", "DisableTFA")
+            }
+            else {
+                @Html.ActionLink("[Enable]", "EnableTFA")
+            }
+        </p>
+        <p>
+            Two Factor Browser : @Model.BrowserRemembered
+            @if (Model.BrowserRemembered) {
+                @Html.ActionLink("[Forget]", "ForgetBrowser")
+            }
+            else {
+                @Html.ActionLink("[Remember]", "RememberBrowser")
+            }
+        </p>
+    </div>
+</div>

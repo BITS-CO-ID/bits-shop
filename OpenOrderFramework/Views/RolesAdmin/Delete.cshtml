@@ -1,0 +1,32 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
+@{
+    ViewBag.Title = "Hapus Hak Akses";
+}
+
+<h2>Hapus Hak Akses.</h2>
+
+<h3>Anda yakin ingin menghapus ? </h3>
+<p>Menghapus hak akses akan menghapus semua pengguna yang ada didalam hak akses tersebut.</p>
+<div>
+    <h4>Hak Akses</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Hapus" class="btn btn-default" /> |
+            @Html.ActionLink("Kembali", "Index")
+        </div>
+    }
+</div>

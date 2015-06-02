@@ -1,0 +1,11 @@
+﻿@model int
+@{
+    ViewBag.Title = "Pemesanan Berhasil !";
+}
+<h2>Pemesanan Berhasil</h2>
+<p>Terimakasih atas pesanan anda. Anda memesan : @Model</p>
+<p>
+    Mau berbelanja lagi ? Silahkan Kunjungi :
+    @Html.ActionLink("store","Index", "Home")
+</p>
+

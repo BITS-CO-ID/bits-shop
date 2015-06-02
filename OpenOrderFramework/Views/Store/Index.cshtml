@@ -1,0 +1,15 @@
+﻿@model IEnumerable<OpenOrderFramework.Models.Catagorie>
+@{
+    ViewBag.Title = "Toko";
+}
+<h3>Lihat Kategori</h3>
+
+<p>
+    Lihat @Model.Count() Kategori :
+</p>
+<ul>
+    @foreach (var catagorie in Model)
+    {
+        <li>@Html.ActionLink(catagorie.Name, "Browse", new { catagorie = catagorie.Name })</li>
+    }
+</ul>
