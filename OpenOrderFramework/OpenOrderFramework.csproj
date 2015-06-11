@@ -276,6 +276,8 @@
     <Content Include="Content\bootswatch.less" />
     <Content Include="Content\variables.less" />
     <Content Include="Content\datepicker.less" />
+    <None Include="Properties\PublishProfiles\f5bec0d2-0ee0-4-231-b9ee - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\f5bec0d2-0ee0-4-231-b9ee - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\orderframework.pubxml" />
     <Content Include="Scripts\card.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
@@ -443,7 +445,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>20036</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
